@@ -1,0 +1,14 @@
+<svg width="612" height="500" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <rect x="50" y="49.90906" id="svg_1" height="180" width="180" fill="#e79f3c" stroke="null" rx="16"/>
+  <path fill="#e79f3c" d="m159,224.90909c-1,0 23,30 23,30c0,0 24,-35 24,-35" id="svg_8" stroke="null"/>
+  <g id="svg_11">
+   <ellipse ry="173" rx="173" id="svg_3" cy="495.99998" cx="354" fill="#d9823a" stroke="null" transform="rotate(90 354 496)"/>
+   <ellipse fill="#333333" cx="354" cy="299.00001" id="svg_2" rx="114.5" ry="114.99999" stroke="null"/>
+  </g>
+  <rect stroke-width="6" stroke="#ffffff" fill="none" x="78.04545" y="78.09088" width="123" height="77.99999" id="svg_6"/>
+  <ellipse ry="11" rx="11" id="svg_7" cy="102.69492" cx="104" fill="#ffffff"/>
+  <path id="svg_12" d="m114.39251,156.16886c-4.25128,-0.07344 15.01858,-34.12197 17.77779,-35.19718c2.75922,-1.07521 12.50887,9.73932 19.47363,15.21181c6.96476,5.47249 23.14692,-36.33797 25.57719,-36.75529c2.43027,-0.41732 33.0557,54.92761 20.14625,56.49203c-12.90945,1.56442 -78.72358,0.32207 -82.97486,0.24863z" opacity="NaN" stroke="null" fill="#ffffff"/>
+ </g>
+</svg>
