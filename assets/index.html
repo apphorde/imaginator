@@ -12,7 +12,7 @@
   <body>
     <section class="flex items-center justify-around h-screen w-screen">
       <div class="container mx-auto px-6 max-w-lg">
-        <img src="/imaginator.svg" style="width: 160px" class="mx-auto block mb-6" />
+        <img src="/imaginator.svg" style="width: 200px" class="mx-auto block mb-6" />
         <h1
           class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-4xl mb-6 text-center"
         >
@@ -31,12 +31,14 @@
             Imagine that
           </button>
         </form>
-        <div id="loading" class="hidden">Generating...</div>
+        <div id="loading" class="hidden p-2 text-center">Hang on...</div>
         <div
           class="text-xs text-gray-500 dark:text-gray-400 hidden"
           id="media"
         >
-          <div class="p-4 flex justify-center"><img id="mediaplayer" src /></div>
+          <div class="p-4 flex justify-center">
+            <img class="rounded-md" id="mediaplayer" src />
+          </div>
           <a
             class="underline underline-offset-2 block text-gray-600 text-center"
             download
@@ -45,7 +47,7 @@
             >Download
           </a>
         </div>
-        <div id="error" class="text-red-500 font-bold"></div>
+        <div id="error" class="text-red-500 font-bold p-2"></div>
       </div>
     </section>
     <script type="module">
