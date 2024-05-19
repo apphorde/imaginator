@@ -1,3 +1,3 @@
-# app-template
+# Imaginator
 
-Node.js app template
+Text-to-image service

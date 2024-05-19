@@ -60,7 +60,8 @@
           try {
             loading.classList.remove("hidden");
             media.classList.add("hidden");
-            const r = await draw(input.value);
+            const options = Object.assign({}, window.drawOptions);
+            const r = await draw(input.value, options);
 
             if (!r.ok) {
               throw new Error("Generation failed: " + await r.text());
