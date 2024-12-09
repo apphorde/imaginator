@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Imaginator</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "@lithium/": "https://--lithium.static.apphor.de/",
+          "@sodium/": "https://--sodium.static.apphor.de/",
+          "@lucide/": "https://--lucide.static.apphor.de/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main
+      hidden
+      bind-hidden="!ready"
+      className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center p-4"
+    >
+      <div
+        className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 shadow-2xl w-full max-w-2xl"
+      >
+        <h1 className="text-4xl font-bold text-white text-center mb-6">
+          AI Image Generator
+        </h1>
+        <p className="text-white text-center mb-8">
+          Transform your words into stunning visuals with our AI-powered image
+          generator.
+        </p>
+        <form on-submit="onSubmit($event)" className="space-y-4">
+          <textarea
+            bind-value="inputText"
+            on-input="onInputChange($event.target.value)"
+            placeholder="Enter your request here..."
+            className="w-full h-32 p-4 rounded-lg bg-white bg-opacity-20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition"
+          ></textarea>
+          <button
+            type="submit"
+            bind-disabled="!inputText"
+            className="w-full bg-white text-purple-600 font-semibold py-3 rounded-lg hover:bg-opacity-90 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+          >
+            Generate Image
+          </button>
+        </form>
+        <template if="imageUrl">
+          <div className="mt-8 flex justify-center">
+            <div
+              className="relative w-64 h-64 rounded-lg overflow-hidden shadow-xl"
+            >
+              <img
+                bind-src="imageUrl"
+                alt="Generated Image"
+                className="transition duration-300 ease-in-out transform hover:scale-105"
+              />
+            </div>
+          </div>
+          <a
+            class="underline underline-offset-2 block text-gray-600 text-center"
+            download
+            filename="image.jpg"
+            bind-href="imageUrl"
+            >Download
+          </a>
+        </template>
+      </div>
+      <template if="loading"
+        ><div class="p-2 text-center">Hang on...</div>
+      </template>
+      <template if="error"
+        ><div class="text-red-500 font-bold p-2">{{error}}</div></template
+      >
+    </main>
+  </body>
+  <script type="module">
+    import draw from "https://tti.jsfn.run/index.mjs";
+    import { ref, mount, html } from "@lithium/web";
+
+    function setup() {
+      const inputText = ref("");
+      const imageUrl = ref("");
+      const ready = ref(true);
+      const loading = ref(true);
+      const error = ref("");
+
+      async function onSubmit(event) {
+        event.preventDefault();
+        loading.value = true;
+
+        try {
+          const options = Object.assign({}, window.drawOptions);
+          const r = await draw(inputText.value, options);
+
+          if (!r.ok) {
+            throw new Error("Generation failed: " + (await r.text()));
+          }
+
+          const blob = new Blob([await r.arrayBuffer()], {
+            type: "image/png",
+          });
+
+          const href = URL.createObjectURL(blob);
+          imageUrl.value = href;
+        } catch (e) {
+          error.value = String(e);
+          console.log(e);
+        } finally {
+          loading.value = false;
+        }
+      }
+
+      function onInputChange(value) {
+        inputText.value = value;
+      }
+
+      return { error, loading, ready, onSubmit, onInputChange };
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const template = html(document.querySelector("main").innerHTML);
+      mount("body", { template, setup });
+    });
+  </script>
+</html>
