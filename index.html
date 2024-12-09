@@ -44,33 +44,41 @@
             Generate Image
           </button>
         </form>
+        <template if="loading"
+          ><div class="p-4 my-4 rounded-lg bg-white text-center text-white">
+            Hang on...
+          </div>
+        </template>
+        <template if="error"
+          ><div class="p-4 my-4 rounded-lg text-red-500 bg-white font-bold">
+            {{error}}
+          </div></template
+        >
         <template if="imageUrl">
           <div class="mt-8 flex justify-center">
             <div
               class="relative w-64 h-64 rounded-lg overflow-hidden shadow-xl"
             >
-              <img
-                bind-src="imageUrl"
-                alt="Generated Image"
-                class="transition duration-300 ease-in-out transform hover:scale-105"
-              />
+              <a
+                class="underline underline-offset-2 block text-gray-600 text-center"
+                download
+                bind-filename="getFilename()"
+                bind-href="imageUrl"
+              >
+                <img
+                  bind-src="imageUrl"
+                  bind-alt="inputText"
+                  class="transition duration-300 ease-in-out transform hover:scale-105"
+                />
+
+                <span class="block my-2 text-sm text-center"
+                  >click to download</span
+                >
+              </a>
             </div>
           </div>
-          <a
-            class="underline underline-offset-2 block text-gray-600 text-center"
-            download
-            filename="image.jpg"
-            bind-href="imageUrl"
-            >Download
-          </a>
         </template>
       </div>
-      <template if="loading"
-        ><div class="p-2 text-center">Hang on...</div>
-      </template>
-      <template if="error"
-        ><div class="text-red-500 font-bold p-2">{{error}}</div></template
-      >
     </main>
   </body>
   <script type="module">
@@ -114,6 +122,10 @@
         inputText.value = value;
       }
 
+      function getFilename() {
+        return inputText.value.replace(/\s+/g, "-").toLowerCase() + ".png";
+      }
+
       return {
         error,
         loading,
@@ -122,6 +134,7 @@
         imageUrl,
         onSubmit,
         onInputChange,
+        getFilename,
       };
     }
 
