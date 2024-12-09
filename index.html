@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Imaginator</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.16/lib/index.min.js"></script>
     <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.16/base.min.css"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
     />
     <script type="importmap">
       {
@@ -20,8 +21,6 @@
   </head>
   <body>
     <main
-      hidden
-      bind-hidden="!ready"
       className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center p-4"
     >
       <div
@@ -86,7 +85,7 @@
       const inputText = ref("");
       const imageUrl = ref("");
       const ready = ref(true);
-      const loading = ref(true);
+      const loading = ref(false);
       const error = ref("");
 
       async function onSubmit(event) {
@@ -119,11 +118,19 @@
         inputText.value = value;
       }
 
-      return { error, loading, ready, inputText, imageUrl, onSubmit, onInputChange };
+      return {
+        error,
+        loading,
+        ready,
+        inputText,
+        imageUrl,
+        onSubmit,
+        onInputChange,
+      };
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      const template = html(document.querySelector("main").innerHTML);
+      const template = html(document.querySelector("body").innerHTML);
       mount("body", { template, setup });
     });
   </script>
